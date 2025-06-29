@@ -1,6 +1,6 @@
 import QtQuick 2.15
 
-Rectangle {
+Item {
     id: playerCharacter
     width: 80
     height: 80
@@ -10,21 +10,15 @@ Rectangle {
     property string currentAnimation: playerViewModel ? playerViewModel.currentAnimation : "idle"
     property bool facingRight: playerViewModel ? playerViewModel.facingRight : true
     
-    color: playerId === 1 ? "#3498DB" : "#E74C3C"
-    border.color: "#ECF0F1"
-    border.width: 2
-    radius: 5
-    
-    // Character ID display
-    Text {
-        anchors.centerIn: parent
-        text: "P" + playerId
-        font.pixelSize: 20
-        font.bold: true
-        color: "white"
+    Image {
+        id: characterSprite
+        anchors.fill: parent
+        source: {
+            var spriteId = "player" + playerId + "_" + currentAnimation;
+            return "image://sprites/" + spriteId;
+        }
     }
     
-    // Animation state indicator
     Rectangle {
         anchors.top: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
@@ -56,7 +50,6 @@ Rectangle {
         }
     }
     
-    // Facing direction indicator
     Rectangle {
         anchors.right: facingRight ? parent.right : undefined
         anchors.left: facingRight ? undefined : parent.left
@@ -68,7 +61,6 @@ Rectangle {
         radius: 2
     }
     
-    // Attack effect
     Rectangle {
         id: attackEffect
         anchors.centerIn: parent
@@ -90,14 +82,12 @@ Rectangle {
         }
     }
     
-    // Listen for attack animations
     onCurrentAnimationChanged: {
         if (currentAnimation.includes("attack")) {
             attackAnimation.start()
         }
     }
     
-    // Transform effect
     transform: Scale {
         xScale: facingRight ? 1 : -1
         origin.x: playerCharacter.width / 2

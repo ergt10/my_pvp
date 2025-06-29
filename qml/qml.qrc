@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/qml">
+    <qresource prefix="/">
         <file>Main.qml</file>
         <file>MenuScreen.qml</file>
         <file>GameScreen.qml</file>
@@ -7,5 +7,7 @@
         <file>GameUI.qml</file>
         <file>HealthBar.qml</file>
         <file>EnergyBar.qml</file>
+        <file>../assets/sprites/trump.png</file>
+        <file>../assets/sprites/xi.png</file>
     </qresource>
 </RCC> 

@@ -28,6 +28,7 @@ add_executable(PvPFightingGame
     src/utils/GameEngine.cpp
     src/utils/ResourceManager.cpp
     src/utils/SoundManager.cpp
+    src/utils/SpriteProvider.cpp
     qml/qml.qrc
 )
 

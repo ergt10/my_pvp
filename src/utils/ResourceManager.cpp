@@ -53,27 +53,21 @@ QPixmap ResourceManager::getBackground(const QString& backgroundName)
 
 void ResourceManager::loadSprites()
 {
-    // 实际项目中应该从文件加载精灵图片
-    // 这里创建一些简单的占位符图片
-    
-    // 创建简单的玩家精灵
-    QPixmap playerSprite(100, 100);
-    playerSprite.fill(Qt::blue);
-    QPainter painter(&playerSprite);
-    painter.setPen(Qt::white);
-    painter.drawRect(10, 10, 80, 80);
-    painter.end();
-    
-    m_sprites["player1_idle"] = playerSprite;
-    
-    QPixmap player2Sprite(100, 100);
-    player2Sprite.fill(Qt::red);
-    QPainter painter2(&player2Sprite);
-    painter2.setPen(Qt::white);
-    painter2.drawRect(10, 10, 80, 80);
-    painter2.end();
-    
-    m_sprites["player2_idle"] = player2Sprite;
+    QPixmap player1_idle_sprite(":/assets/sprites/trump.png");
+    if (player1_idle_sprite.isNull()) {
+        qDebug() << "错误：无法加载图片 trump.png";
+    } else {
+        qDebug() << "成功加载图片 trump.png";
+    }
+    m_sprites["player1_idle"] = player1_idle_sprite;
+
+    QPixmap player2_idle_sprite(":/assets/sprites/xi.png");
+    if (player2_idle_sprite.isNull()) {
+        qDebug() << "错误：无法加载图片 xi.png";
+    } else {
+        qDebug() << "成功加载图片 xi.png";
+    }
+    m_sprites["player2_idle"] = player2_idle_sprite;
 }
 
 void ResourceManager::loadBackgrounds()
