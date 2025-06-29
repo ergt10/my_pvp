@@ -23,6 +23,11 @@ PlayerModel::PlayerModel(int playerId, QObject *parent)
 {
     m_fighter = std::make_unique<FighterModel>(this);
     updateHitBox();
+    connect(&m_attackTimer, &QTimer::timeout, this, [this]() {
+        m_isAttacking = false;
+        qDebug() << "玩家" << m_playerId << "攻击状态重置";
+    });
+    m_attackTimer.setSingleShot(true);
 }
 
 void PlayerModel::setPosition(const QPointF& position)
@@ -91,6 +96,7 @@ void PlayerModel::reset()
     m_isAttacking = false;
     m_onGround = true;
     setCurrentAnimation("idle");
+    m_attackTimer.stop();
     
     emit healthChanged();
     emit energyChanged();
@@ -151,6 +157,7 @@ void PlayerModel::lightAttack()
         useEnergy(10);
         setCurrentAnimation("light_attack");
         emit attackPerformed("light");
+        m_attackTimer.start(500);
     }
 }
 
@@ -161,6 +168,7 @@ void PlayerModel::heavyAttack()
         useEnergy(25);
         setCurrentAnimation("heavy_attack");
         emit attackPerformed("heavy");
+        m_attackTimer.start(1000);
     }
 }
 
@@ -171,6 +179,7 @@ void PlayerModel::specialAttack()
         useEnergy(50);
         setCurrentAnimation("special_attack");
         emit attackPerformed("special");
+        m_attackTimer.start(2000);
     }
 }
 
@@ -230,6 +239,11 @@ void PlayerModel::updateAnimation()
 {
     if (m_isAttacking) {
         // 攻击动画会在动画完成后自动重置
+        if (m_currentAnimation != "light_attack" && 
+            m_currentAnimation != "heavy_attack" && 
+            m_currentAnimation != "special_attack") {
+            m_isAttacking = false;  // 重置攻击状态
+        }
         return;
     }
     
