@@ -3,6 +3,7 @@
 #include <QObject>
 #include <QPointF>
 #include <QRectF>
+#include <QTimer>
 #include <memory>
 #include "FighterModel.h"
 
@@ -81,6 +82,7 @@ private:
     bool m_facingRight;
     QString m_currentAnimation;
     QRectF m_hitBox;
+    QTimer m_attackTimer;
     
     std::unique_ptr<FighterModel> m_fighter;
     
