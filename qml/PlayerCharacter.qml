@@ -49,18 +49,18 @@ Item {
             }
         }
     }
-    
+    //攻击会在角色右上角显示出来
     Rectangle {
-        anchors.right: facingRight ? parent.right : undefined
-        anchors.left: facingRight ? undefined : parent.left
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.margins: -10
+        anchors.left: facingRight ? parent.right : undefined
+        anchors.right: !facingRight ? parent.left : undefined
+        anchors.leftMargin: facingRight ? -10 : 0
+        anchors.rightMargin: !facingRight ? -10 : 0
         width: getWeaponLength()
         height: 4
         color: getWeaponColor()
         radius: 2
-        
-        // 武器光芒
+            
+        // 攻击光芒
         Rectangle {
             anchors.centerIn: parent
             width: parent.width * 0.7
@@ -74,7 +74,7 @@ Item {
             }
         }
         
-        // 根据动画状态调整武器长度
+        // 根据动画状态调整攻击强度
         function getWeaponLength() {
             switch (currentAnimation) {
                 case "light_attack": return 18
@@ -85,7 +85,7 @@ Item {
             }
         }
         
-        // 根据动画状态调整武器颜色
+        // 根据动画状态调整攻击颜色
         function getWeaponColor() {
             switch (currentAnimation) {
                 case "light_attack": return "#FFA500"  // 橙色
