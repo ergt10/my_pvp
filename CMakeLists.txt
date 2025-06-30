@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Find required Qt components
-find_package(Qt6 REQUIRED COMPONENTS Core Quick Multimedia)
+find_package(Qt6 REQUIRED COMPONENTS Core Quick Multimedia Qml Gui QuickControls2)
 
 # Qt specific settings
 set(CMAKE_AUTOMOC ON)
@@ -46,9 +46,25 @@ target_link_libraries(PvPFightingGame
     Qt6::Core
     Qt6::Quick
     Qt6::Multimedia
+    Qt6::Qml
+    Qt6::Gui
+    Qt6::QuickControls2
 )
 
 # Copy assets to build directory (if needed)
 if(EXISTS ${CMAKE_SOURCE_DIR}/assets)
     file(COPY ${CMAKE_SOURCE_DIR}/assets DESTINATION ${CMAKE_BINARY_DIR})
-endif() 
+endif()
+
+# 设置安装目标
+install(TARGETS PvPFightingGame
+    BUNDLE DESTINATION .
+    RUNTIME DESTINATION bin
+)
+
+# Linux部署目标
+add_custom_target(deploy
+    COMMAND ${CMAKE_COMMAND} --install ${CMAKE_BINARY_DIR} --prefix ${CMAKE_BINARY_DIR}/deploy
+    DEPENDS PvPFightingGame
+    COMMENT "部署Linux应用程序..."
+) 

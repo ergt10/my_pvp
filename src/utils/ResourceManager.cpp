@@ -25,7 +25,6 @@ void ResourceManager::loadResources()
     
     loadSprites();
     loadBackgrounds();
-    loadDefaultResources();
     
     m_loaded = true;
     qDebug() << "游戏资源加载完成";
@@ -59,29 +58,45 @@ void ResourceManager::loadSprites()
     } else {
         qDebug() << "成功加载图片 trump.png";
     }
-    m_sprites["player1_idle"] = player1_idle_sprite;
-
+    
     QPixmap player2_idle_sprite(":/assets/sprites/xi.png");
     if (player2_idle_sprite.isNull()) {
         qDebug() << "错误：无法加载图片 xi.png";
     } else {
         qDebug() << "成功加载图片 xi.png";
     }
+    
+    // Player 1 (Trump) 所有动画状态
+    m_sprites["player1_idle"] = player1_idle_sprite;
+    m_sprites["player1_walk"] = player1_idle_sprite;  // 临时使用同一张图片
+    m_sprites["player1_jump"] = player1_idle_sprite;
+    m_sprites["player1_light_attack"] = player1_idle_sprite;
+    m_sprites["player1_heavy_attack"] = player1_idle_sprite;
+    m_sprites["player1_special_attack"] = player1_idle_sprite;
+    m_sprites["player1_block"] = player1_idle_sprite;
+    m_sprites["player1_crouch"] = player1_idle_sprite;
+    
+    // Player 2 (Xi) 所有动画状态
     m_sprites["player2_idle"] = player2_idle_sprite;
+    m_sprites["player2_walk"] = player2_idle_sprite;  // 临时使用同一张图片
+    m_sprites["player2_jump"] = player2_idle_sprite;
+    m_sprites["player2_light_attack"] = player2_idle_sprite;
+    m_sprites["player2_heavy_attack"] = player2_idle_sprite;
+    m_sprites["player2_special_attack"] = player2_idle_sprite;
+    m_sprites["player2_block"] = player2_idle_sprite;
+    m_sprites["player2_crouch"] = player2_idle_sprite;
+    
+    qDebug() << "所有精灵动画状态已加载";
 }
 
 void ResourceManager::loadBackgrounds()
 {
-    // 创建简单的背景
-    QPixmap background(800, 600);
-    background.fill(QColor(135, 206, 235)); // 天蓝色
-    
-    QPainter painter(&background);
-    painter.setPen(Qt::darkGreen);
-    painter.setBrush(Qt::green);
-    painter.drawRect(0, 450, 800, 150); // 地面
-    painter.end();
-    
+    QPixmap background(":/assets/backgrounds/background.png");
+    if (background.isNull()) {
+        qDebug() << "错误：无法加载图片 my_bg.png";
+    } else {
+        qDebug() << "成功加载图片 my_bg.png";
+    }
     m_backgrounds["default"] = background;
 }
 

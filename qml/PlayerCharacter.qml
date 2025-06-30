@@ -55,10 +55,55 @@ Item {
         anchors.left: facingRight ? undefined : parent.left
         anchors.verticalCenter: parent.verticalCenter
         anchors.margins: -10
-        width: 15
-        height: 5
-        color: "#F1C40F"
+        width: getWeaponLength()
+        height: 4
+        color: getWeaponColor()
         radius: 2
+        
+        // 武器光芒
+        Rectangle {
+            anchors.centerIn: parent
+            width: parent.width * 0.7
+            height: 2
+            color: "#FFFFFF"
+            opacity: currentAnimation.includes("attack") ? 0.8 : 0.2
+            radius: 1
+            
+            Behavior on opacity {
+                NumberAnimation { duration: 150 }
+            }
+        }
+        
+        // 根据动画状态调整武器长度
+        function getWeaponLength() {
+            switch (currentAnimation) {
+                case "light_attack": return 18
+                case "heavy_attack": return 22
+                case "special_attack": return 26
+                case "block": return 12
+                default: return 15
+            }
+        }
+        
+        // 根据动画状态调整武器颜色
+        function getWeaponColor() {
+            switch (currentAnimation) {
+                case "light_attack": return "#FFA500"  // 橙色
+                case "heavy_attack": return "#FF4500"  // 红橙色
+                case "special_attack": return "#FF0000" // 红色
+                case "block": return "#4169E1"         // 蓝色
+                default: return "#C0C0C0"              // 银色
+            }
+        }
+        
+        // 平滑过渡动画
+        Behavior on width {
+            NumberAnimation { duration: 200 }
+        }
+        
+        Behavior on color {
+            ColorAnimation { duration: 200 }
+        }
     }
     
     Rectangle {

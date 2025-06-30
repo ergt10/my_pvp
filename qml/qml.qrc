@@ -9,5 +9,7 @@
         <file>EnergyBar.qml</file>
         <file>../assets/sprites/trump.png</file>
         <file>../assets/sprites/xi.png</file>
+        <file>../assets/sounds/background_music.mp3</file>
+        <file>../assets/backgrounds/background.png</file>
     </qresource>
 </RCC> 

@@ -4,10 +4,26 @@ import QtQuick.Controls 2.15
 Rectangle {
     id: gameScreen
     objectName: "gameScreen"
-    color: "#87CEEB" // Sky blue background
+    color: "#87CEEB" // 备用颜色，如果图片加载失败则显示
     focus: true
     
     signal backToMenu()
+    
+    // 背景图片
+    Image {
+        id: backgroundImage
+        anchors.fill: parent
+        source: "image://sprites/background_default"
+        fillMode: Image.PreserveAspectCrop
+        
+        // 如果图片加载失败，显示纯色背景
+        onStatusChanged: {
+            if (status === Image.Error) {
+                visible = false
+                console.log("背景图片加载失败，使用纯色背景")
+            }
+        }
+    }
     
     // Ground
     Rectangle {

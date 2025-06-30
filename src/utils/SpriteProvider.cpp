@@ -10,7 +10,16 @@ QPixmap SpriteProvider::requestPixmap(const QString &id, QSize *size, const QSiz
 {
     qDebug() << "SpriteProvider: 请求图片ID:" << id;
     
-    QPixmap pixmap = ResourceManager::getInstance().getSprite(id);
+    QPixmap pixmap;
+    
+    // 检查是否为背景图片请求
+    if (id.startsWith("background_")) {
+        QString backgroundName = id.mid(11); // 移除 "background_" 前缀
+        pixmap = ResourceManager::getInstance().getBackground(backgroundName);
+    } else {
+        // 普通精灵图片请求
+        pixmap = ResourceManager::getInstance().getSprite(id);
+    }
     
     if (pixmap.isNull()) {
         qWarning() << "SpriteProvider: 找不到图片:" << id;

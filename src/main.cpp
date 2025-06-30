@@ -1,18 +1,19 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QQuickStyle>
 #include <QDebug>
 
 #include "viewmodels/GameViewModel.h"
 #include "utils/GameEngine.h"
 #include "utils/ResourceManager.h"
 #include "utils/SpriteProvider.h"
-#include "utils/SpriteProvider.h"
+#include "utils/SoundManager.h"
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-    
+    QQuickStyle::setStyle("Fusion");
     qmlRegisterType<GameViewModel>("Game", 1, 0, "GameViewModel");
     
     // 初始化游戏引擎
@@ -20,6 +21,12 @@ int main(int argc, char *argv[])
     
     // 加载资源
     ResourceManager::getInstance().loadResources();
+    
+    // 初始化音效系统
+    SoundManager::getInstance().initialize();
+    
+    // 播放背景音乐
+    SoundManager::getInstance().playMusic("background_music.mp3");
     
     QQmlApplicationEngine engine;
     

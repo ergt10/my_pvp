@@ -2,6 +2,8 @@
 
 #include <QObject>
 #include <QString>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 
 // 简单的音效管理器占位符
 // 后续可以扩展为完整的音频系统
@@ -27,4 +29,7 @@ private:
     
     bool m_initialized;
     float m_volume;
+    
+    QMediaPlayer* m_musicPlayer;
+    QAudioOutput* m_audioOutput;
 }; 
