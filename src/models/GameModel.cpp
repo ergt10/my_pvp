@@ -34,21 +34,32 @@ void GameModel::initializePlayers()
 
 void GameModel::startGame()
 {
-    if (m_state != GameState::Menu) return;
+    // 移除状态检查限制，允许从任何状态启动游戏
+    qDebug() << "启动游戏，当前状态:" << static_cast<int>(m_state);
     
     m_state = GameState::Fighting;
     m_timeRemaining = 99;
     m_isPaused = false;
     
     // 重置玩家状态
-    m_player1->reset();
-    m_player2->reset();
+    if (m_player1) {
+        m_player1->reset();
+        m_player1->setPosition(QPointF(200, 400));
+        m_player1->setFacingRight(true);
+    }
+    
+    if (m_player2) {
+        m_player2->reset();
+        m_player2->setPosition(QPointF(600, 400));
+        m_player2->setFacingRight(false);
+    }
     
     // 启动游戏循环
     m_gameTimer->start(16); // 60 FPS
     m_roundTimer->start(1000); // 1秒倒计时
     
     emit stateChanged();
+    emit timeRemainingChanged();
     qDebug() << "游戏开始！";
 }
 
@@ -88,9 +99,29 @@ void GameModel::endGame()
 void GameModel::resetGame()
 {
     endGame();
+    
+    // 重置游戏状态
     m_state = GameState::Menu;
-    initializePlayers();
+    m_timeRemaining = 99;
+    m_isPaused = false;
+    
+    // 重置玩家状态而不是重新创建
+    if (m_player1) {
+        m_player1->reset();
+        m_player1->setPosition(QPointF(200, 400));
+        m_player1->setFacingRight(true);
+    }
+    
+    if (m_player2) {
+        m_player2->reset();
+        m_player2->setPosition(QPointF(600, 400));
+        m_player2->setFacingRight(false);
+    }
+    
     emit stateChanged();
+    emit timeRemainingChanged();
+    
+    qDebug() << "游戏已重置";
 }
 
 void GameModel::updateGame()

@@ -65,50 +65,128 @@ ApplicationWindow {
     Dialog {
         id: gameEndDialog
         anchors.centerIn: parent
-        width: 300
-        height: 200
+        width: 450
+        height: 350
         title: "Game Over"
         modal: true
         
         property int winnerId: 0
         
-        contentItem: Column {
-            spacing: 20
-            width: parent.width - 40
-            anchors.centerIn: parent
+        contentItem: Item {
+            width: parent.width
+            height: parent.height
             
-            Text {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: "Player " + gameEndDialog.winnerId + " Wins!"
-                font.pixelSize: 24
-                color: "#333333"
+            Column {
+                anchors.centerIn: parent
+                spacing: 40
+                width: parent.width - 40
+                
+                Text {
+                    width: parent.width
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    text: "Player " + gameEndDialog.winnerId + " Wins!"
+                    font.pixelSize: 32
+                    font.bold: true
+                    color: "#2C3E50"
+                    horizontalAlignment: Text.AlignHCenter
+                    wrapMode: Text.WordWrap
+                    
+                    Rectangle {
+                        anchors.centerIn: parent
+                        width: parent.contentWidth + 30
+                        height: parent.contentHeight + 15
+                        color: "#F8F9FA"
+                        radius: 10
+                        z: -1
+                        border.color: "#E9ECEF"
+                        border.width: 2
+                    }
+                }
+                
+                Column {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    spacing: 20
+                    
+                    Button {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: "Play Again"
+                        width: 150
+                        height: 50
+                        font.pixelSize: 16
+                        font.bold: true
+                        
+                        background: Rectangle {
+                            color: parent.pressed ? "#27AE60" : "#2ECC71"
+                            radius: 10
+                            border.color: "#229954"
+                            border.width: 2
+                        }
+                        
+                        contentItem: Text {
+                            text: parent.text
+                            font: parent.font
+                            color: "white"
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                        }
+                        
+                        onClicked: {
+                            gameEndDialog.close()
+                            gameViewModel.resetGame()
+                            gameViewModel.startGame()
+                        }
+                    }
+                    
+                    Button {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: "Back to Menu"
+                        width: 150
+                        height: 50
+                        font.pixelSize: 16
+                        font.bold: true
+                        
+                        background: Rectangle {
+                            color: parent.pressed ? "#2980B9" : "#3498DB"
+                            radius: 10
+                            border.color: "#2471A3"
+                            border.width: 2
+                        }
+                        
+                        contentItem: Text {
+                            text: parent.text
+                            font: parent.font
+                            color: "white"
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                        }
+                        
+                        onClicked: {
+                            gameEndDialog.close()
+                            stackView.pop()
+                            gameViewModel.resetGame()
+                        }
+                    }
+                }
             }
+        }
+        
+        // 添加背景样式
+        background: Rectangle {
+            color: "#FFFFFF"
+            radius: 15
+            border.color: "#BDC3C7"
+            border.width: 3
             
-            Row {
-                anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 20
-                
-                Button {
-                    text: "Play Again"
-                    width: 100
-                    height: 40
-                    onClicked: {
-                        gameEndDialog.close()
-                        gameViewModel.resetGame()
-                        gameViewModel.startGame()
-                    }
-                }
-                
-                Button {
-                    text: "Back to Menu"
-                    width: 100
-                    height: 40
-                    onClicked: {
-                        gameEndDialog.close()
-                        stackView.pop()
-                        gameViewModel.resetGame()
-                    }
-                }
+            // 添加阴影效果
+            Rectangle {
+                anchors.fill: parent
+                anchors.margins: -8
+                color: "transparent"
+                border.color: "#34495E"
+                border.width: 1
+                radius: 18
+                opacity: 0.2
+                z: -1
             }
         }
     }

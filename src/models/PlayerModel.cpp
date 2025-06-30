@@ -85,6 +85,8 @@ void PlayerModel::restoreEnergy(int amount)
 
 void PlayerModel::reset()
 {
+    qDebug() << "重置玩家" << m_playerId << "状态";
+    
     m_health = m_maxHealth;
     m_energy = m_maxEnergy;
     m_velocity = QPointF(0, 0);
@@ -98,8 +100,14 @@ void PlayerModel::reset()
     setCurrentAnimation("idle");
     m_attackTimer.stop();
     
+    // 确保UI更新
     emit healthChanged();
     emit energyChanged();
+    emit positionChanged();
+    emit facingRightChanged();
+    emit currentAnimationChanged();
+    
+    qDebug() << "玩家" << m_playerId << "状态重置完成 - 血量:" << m_health << "能量:" << m_energy;
 }
 
 void PlayerModel::update()

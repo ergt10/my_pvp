@@ -63,11 +63,21 @@ void GameViewModel::resetGame()
 
 void GameViewModel::handleKeyPress(int key)
 {
+    if (!m_gameModel || !m_gameModel->player1() || !m_gameModel->player2()) {
+        qWarning() << "GameViewModel::handleKeyPress - 玩家对象为空";
+        return;
+    }
+    
     m_inputController->handleKeyPress(key, m_gameModel->player1(), m_gameModel->player2());
 }
 
 void GameViewModel::handleKeyRelease(int key)
 {
+    if (!m_gameModel || !m_gameModel->player1() || !m_gameModel->player2()) {
+        qWarning() << "GameViewModel::handleKeyRelease - 玩家对象为空";
+        return;
+    }
+    
     m_inputController->handleKeyRelease(key, m_gameModel->player1(), m_gameModel->player2());
 }
 
