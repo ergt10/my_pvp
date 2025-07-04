@@ -7,9 +7,11 @@
         <file>GameUI.qml</file>
         <file>HealthBar.qml</file>
         <file>EnergyBar.qml</file>
+        <file>TransitionScreen.qml</file>
         <file>../assets/sprites/trump.png</file>
         <file>../assets/sprites/xi.png</file>
         <file>../assets/sounds/background_music.mp3</file>
         <file>../assets/backgrounds/background.png</file>
+        <file>../assets/backgrounds/transition_1.png</file>
     </qresource>
 </RCC> 

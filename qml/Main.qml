@@ -20,6 +20,15 @@ ApplicationWindow {
             id: menuScreen
             MenuScreen {
                 onStartGame: {
+                    stackView.push(transitionScreen)
+                }
+            }
+        }
+
+        Component {
+            id: transitionScreen
+            TransitionScreen {
+                onTransitionFinished: {
                     stackView.push(gameScreen)
                     gameViewModel.startGame()
                 }
@@ -30,7 +39,8 @@ ApplicationWindow {
             id: gameScreen
             GameScreen {
                 onBackToMenu: {
-                    stackView.pop()
+                    stackView.clear(); // 清空堆栈
+                    stackView.push(menuScreen); // 跳转到菜单界面
                     gameViewModel.resetGame()
                 }
             }
@@ -162,7 +172,8 @@ ApplicationWindow {
                         
                         onClicked: {
                             gameEndDialog.close()
-                            stackView.pop()
+                            stackView.clear(); 
+                            stackView.push(menuScreen); 
                             gameViewModel.resetGame()
                         }
                     }
